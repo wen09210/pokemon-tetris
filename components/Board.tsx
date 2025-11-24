@@ -1,12 +1,13 @@
-import React from 'react';
+import * as React from 'react';
 import Cell from './Cell';
 import { BoardShape } from '../types';
 
 interface BoardProps {
   stage: BoardShape;
+  children?: React.ReactNode;
 }
 
-const Board: React.FC<BoardProps> = ({ stage }) => {
+const Board: React.FC<BoardProps> = ({ stage, children }) => {
   return (
     // The screen container
     <div className="relative p-1 bg-slate-800 rounded-md border-4 border-slate-600 shadow-xl h-full w-auto aspect-[10/20]">
@@ -18,6 +19,8 @@ const Board: React.FC<BoardProps> = ({ stage }) => {
                     <Cell key={`${y}-${x}`} type={cell[0]} isGhost={cell[1] === 'ghost'} />
                 ))
             )}
+            {/* Overlay UI (Start Screen / Game Over) */}
+            {children}
         </div>
     </div>
   );
