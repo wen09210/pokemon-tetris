@@ -1,6 +1,6 @@
 import React from 'react';
 import Cell from './Cell';
-import { Tetromino } from '../types';
+import { Tetromino, TetrominoType } from '../types';
 
 interface NextPieceProps {
   tetromino: Tetromino;
@@ -24,7 +24,7 @@ const NextPiece: React.FC<NextPieceProps> = ({ tetromino }) => {
                // Tetromino shapes are rarely 4x4 (except I), usually 2x2 or 3x3.
                // We render the shape starting from (0,0) of this grid for simplicity,
                // or center it if we wanted to be fancy.
-               let type = 0;
+               let type: TetrominoType | 0 = 0;
                if (tetromino.shape[y] && tetromino.shape[y][x]) {
                    type = tetromino.shape[y][x] ? tetromino.type : 0;
                }

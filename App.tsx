@@ -19,6 +19,7 @@ const App: React.FC = () => {
   const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.MENU);
   const [pokemonId, setPokemonId] = useState(25); // Start with Pikachu
   const [collectedPokemon, setCollectedPokemon] = useState<number[]>([]);
+  const [isMuted, setIsMuted] = useState(false);
 
   const { player, updatePlayerPos, resetPlayer, playerRotate, setPlayer, nextTetromino } = usePlayer();
   const { stage, setStage, rowsCleared } = useStage(player, resetPlayer);
@@ -42,6 +43,19 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowsCleared]);
 
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent game focus loss or accidental moves
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
+    audio.setMute(newMutedState);
+    
+    // Resume music if unmuting while playing
+    if (!newMutedState && gameStatus === GameStatus.PLAYING) {
+      audio.playBGM();
+    }
+    gameAreaRef.current?.focus();
+  };
+
   const movePlayer = (dir: number) => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
       updatePlayerPos({ x: dir, y: 0, collided: false });
@@ -60,6 +74,7 @@ const App: React.FC = () => {
     setCollectedPokemon([]); // Reset collection
     setGameStatus(GameStatus.PLAYING);
     audio.start();
+    audio.playBGM();
   };
 
   const drop = () => {
@@ -75,6 +90,7 @@ const App: React.FC = () => {
         setGameStatus(GameStatus.GAMEOVER);
         setDropTime(null);
         audio.gameOver();
+        audio.stopBGM();
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
@@ -147,7 +163,7 @@ const App: React.FC = () => {
 
   return (
     <div 
-        className="flex flex-col h-[100dvh] w-screen bg-[#D8D0C0] overflow-hidden outline-none touch-none p-4"
+        className="flex flex-col h-[100dvh] w-screen bg-[#D8D0C0] overflow-hidden outline-none touch-none p-4 relative"
         role="button"
         tabIndex={0}
         onKeyDown={(e) => move(e)}
@@ -155,6 +171,15 @@ const App: React.FC = () => {
         ref={gameAreaRef}
         autoFocus
     >
+        {/* Mute Button */}
+        <button 
+          onClick={toggleMute}
+          className="absolute top-4 right-4 z-50 p-2 bg-slate-800 border-2 border-slate-600 rounded text-white shadow-lg active:translate-y-1 hover:bg-slate-700 transition-colors"
+          title={isMuted ? "Unmute" : "Mute"}
+        >
+          {isMuted ? "🔇" : "🔊"}
+        </button>
+
         <GeminiFeedback rowsCleared={rowsCleared} />
         {/* Main Game Area: Split Left (Board) and Right (Sidebar) */}
         <div className="flex flex-row flex-grow w-full gap-4 overflow-hidden mb-2">
