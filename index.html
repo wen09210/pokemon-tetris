@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Tetris Mon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+      
+      body {
+        font-family: 'Press Start 2P', cursive;
+        touch-action: none;
+        overscroll-behavior: none;
+        background-color: #D8D0C0; /* Vintage Gameboy Beige */
+        image-rendering: pixelated;
+      }
+
+      /* Pixel border effect for blocks */
+      .pixel-block {
+        box-shadow: 
+          inset 2px 2px 0px rgba(255, 255, 255, 0.4), 
+          inset -2px -2px 0px rgba(0, 0, 0, 0.4);
+        border: 2px solid rgba(0,0,0,0.5);
+      }
+      
+      .ghost-block {
+        background-color: transparent;
+        border: 2px dashed rgba(0, 0, 0, 0.3);
+        box-shadow: none;
+      }
+
+      /* Scanline effect for the screen */
+      .screen-scanline {
+        background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0),
+          rgba(255,255,255,0) 50%,
+          rgba(0,0,0,0.1) 50%,
+          rgba(0,0,0,0.1)
+        );
+        background-size: 100% 4px;
+        pointer-events: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body class="bg-[#D8D0C0] text-slate-800 overflow-hidden select-none">
+    <div id="root"></div>
+  </body>
+</html>
