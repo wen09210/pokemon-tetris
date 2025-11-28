@@ -2,9 +2,10 @@
   "name": "tetrismon",
   "version": "1.0.0",
   "type": "module",
+  "homepage": "https://wen09210.github.io/pokemon-tetris/",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
