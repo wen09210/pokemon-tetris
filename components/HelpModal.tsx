@@ -65,12 +65,12 @@ const HelpModal: React.FC<HelpModalProps> = ({ isOpen, onClose }) => {
                     <span>MOVE / SOFT DROP</span>
                 </li>
                 <li className="flex justify-between border-b border-slate-300 pb-1">
-                    <span className="text-red-700">RED BUTTON (A)</span>
-                    <span>ROTATE</span>
+                    <span className="text-slate-800">RED BUTTON (A)</span>
+                    <span className="text-slate-800">ROTATE</span>
                 </li>
                 <li className="flex justify-between border-b border-slate-300 pb-1">
-                    <span className="text-green-700">GREEN BUTTON (B)</span>
-                    <span>HARD DROP</span>
+                    <span className="text-slate-800">GREEN BUTTON (B)</span>
+                    <span className="text-slate-800">HARD DROP</span>
                 </li>
             </ul>
           </section>
