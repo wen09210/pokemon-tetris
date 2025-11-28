@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: './', // Use relative base path for correct loading on GitHub Pages
+  base: '/pokemon-tetris/'
   define: {
     // Safely replace process.env with a simple object to prevent "process is not defined" error in browser
     'process.env': JSON.stringify({
