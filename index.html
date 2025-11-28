@@ -15,8 +15,9 @@
         background-color: #D8D0C0; /* Vintage Gameboy Beige */
         image-rendering: pixelated;
       }
-
+      
       /* Pixel border effect for blocks */
+      
       .pixel-block {
         box-shadow: 
           inset 2px 2px 0px rgba(255, 255, 255, 0.4), 
@@ -29,8 +30,9 @@
         border: 2px dashed rgba(0, 0, 0, 0.3);
         box-shadow: none;
       }
-
+      
       /* Scanline effect for the screen */
+      
       .screen-scanline {
         background: linear-gradient(
           to bottom,
@@ -43,21 +45,23 @@
         pointer-events: none;
       }
     </style>
+
   <script type="importmap">
 {
   "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
     "vite": "https://aistudiocdn.com/vite@^7.2.4",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
   }
 }
 </script>
+  <script type="module" crossorigin src="/pokemon-tetris/assets/index-DNSv2JPF.js"></script>
 </head>
   <body class="bg-[#D8D0C0] text-slate-800 overflow-hidden select-none">
     <div id="root"></div>
-     <script type="module" src="/index.tsx"></script>
+    <!-- Vite handles this script during build and injects the bundled JS automatically -->
   </body>
 </html>
