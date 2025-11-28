@@ -68,7 +68,8 @@ export const useStage = (player: PlayerState, resetPlayer: () => void) => {
             const targetX = x + player.pos.x;
             if (
               newStage[targetY] &&
-              newStage[targetY][targetX]
+              newStage[targetY][targetX] &&
+              newStage[targetY][targetX][1] !== 'merged' // Prevent overwriting existing blocks
             ) {
               newStage[targetY][targetX] = [
                 value === 1 ? player.tetromino.type : 0,

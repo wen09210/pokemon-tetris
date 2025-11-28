@@ -5,81 +5,100 @@ interface ControlsProps {
 }
 
 const Controls: React.FC<ControlsProps> = ({ onControl }) => {
-  return (
-    <div className="w-full shrink-0 pt-1 pb-safe mx-auto max-w-lg">
-        <div className="flex items-center justify-evenly gap-4">
-            
-            {/* D-Pad (Cross Key) */}
-            <div className="relative w-32 h-32 md:w-36 md:h-36 shrink-0">
-                {/* Center Background Block for cohesion */}
-                <div className="absolute top-1/3 left-1/3 w-1/3 h-1/3 bg-slate-800 z-0"></div>
+  
+  // Helper to handle interaction and prevent browser defaults (scrolling, zooming)
+  const handlePress = (e: React.PointerEvent | React.MouseEvent | React.TouchEvent, action: 'L' | 'R' | 'D' | 'ROT' | 'HD') => {
+    e.preventDefault();
+    e.stopPropagation();
+    onControl(action);
+  };
 
-                {/* Up (Rotate) */}
+  return (
+    <div className="w-full shrink-0 pt-4 pb-8 mx-auto max-w-lg select-none px-6 touch-none flex flex-col items-center">
+        <div className="flex items-center justify-between gap-8 md:gap-16 w-full md:w-auto">
+            
+            {/* D-Pad (Classic Cross Style) */}
+            <div className="relative w-40 h-40 shrink-0 touch-none">
+                {/* D-Pad Background/Socket */}
+                <div className="absolute inset-2 bg-slate-300/30 rounded-full pointer-events-none"></div>
+
+                {/* Up */}
                 <button 
-                    className="absolute top-0 left-1/3 w-1/3 h-1/3 bg-slate-800 rounded-t border-t-4 border-l-4 border-r-4 border-black active:border-0 shadow-lg z-10 flex items-center justify-center text-white"
-                    onClick={() => onControl('ROT')}
-                    aria-label="Up / Rotate"
+                    className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-14 bg-slate-800 rounded-t hover:bg-slate-700 active:bg-slate-600 active:mt-1 shadow-md border-b-0 border-2 border-slate-900 z-10 flex items-start justify-center pt-2 text-slate-400 touch-none outline-none focus:outline-none"
+                    onPointerDown={(e) => handlePress(e, 'ROT')}
+                    onContextMenu={(e) => e.preventDefault()}
+                    aria-label="Rotate"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
+                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 5l-8 10h16z" />
                     </svg>
                 </button>
-                {/* Left */}
-                <button 
-                    className="absolute top-1/3 left-0 w-1/3 h-1/3 bg-slate-800 rounded-l border-l-4 border-t-4 border-b-4 border-black active:border-0 shadow-lg z-10 flex items-center justify-center text-white"
-                    onClick={() => onControl('L')}
-                    aria-label="Left"
-                >
-                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                </button>
-                {/* Right */}
-                <button 
-                    className="absolute top-1/3 right-0 w-1/3 h-1/3 bg-slate-800 rounded-r border-r-4 border-t-4 border-b-4 border-black active:border-0 shadow-lg z-10 flex items-center justify-center text-white"
-                    onClick={() => onControl('R')}
-                    aria-label="Right"
-                >
-                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                    </svg>
-                </button>
+
                 {/* Down */}
                 <button 
-                    className="absolute bottom-0 left-1/3 w-1/3 h-1/3 bg-slate-800 rounded-b border-b-4 border-l-4 border-r-4 border-black active:border-0 shadow-lg z-10 flex items-center justify-center text-white"
-                    onClick={() => onControl('D')}
+                    className="absolute bottom-2 left-1/2 -translate-x-1/2 w-12 h-14 bg-slate-800 rounded-b hover:bg-slate-700 active:bg-slate-600 active:mt-1 shadow-md border-t-0 border-2 border-slate-900 z-10 flex items-end justify-center pb-2 text-slate-400 touch-none outline-none focus:outline-none"
+                    onPointerDown={(e) => handlePress(e, 'D')}
+                    onContextMenu={(e) => e.preventDefault()}
                     aria-label="Down"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                         <path d="M12 19l8-10H4z" />
+                    </svg>
+                </button>
+
+                {/* Left */}
+                <button 
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-14 h-12 bg-slate-800 rounded-l hover:bg-slate-700 active:bg-slate-600 active:ml-1 shadow-md border-r-0 border-2 border-slate-900 z-10 flex items-center justify-start pl-2 text-slate-400 touch-none outline-none focus:outline-none"
+                    onPointerDown={(e) => handlePress(e, 'L')}
+                    onContextMenu={(e) => e.preventDefault()}
+                    aria-label="Left"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M5 12l10 8V4z" />
+                    </svg>
+                </button>
+
+                {/* Right */}
+                <button 
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-14 h-12 bg-slate-800 rounded-r hover:bg-slate-700 active:bg-slate-600 active:mr-1 shadow-md border-l-0 border-2 border-slate-900 z-10 flex items-center justify-end pr-2 text-slate-400 touch-none outline-none focus:outline-none"
+                    onPointerDown={(e) => handlePress(e, 'R')}
+                    onContextMenu={(e) => e.preventDefault()}
+                    aria-label="Right"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 12l-10-8v16z" />
                     </svg>
                 </button>
                 
-                {/* Center decoration */}
-                 <div className="absolute top-1/3 left-1/3 w-1/3 h-1/3 pointer-events-none z-20 flex items-center justify-center">
-                    <div className="w-2/3 h-2/3 bg-black/20 rounded-full"></div>
-                 </div>
+                {/* Center Pivot */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-slate-800 z-20 flex items-center justify-center pointer-events-none">
+                    <div className="w-4 h-4 rounded-full bg-slate-900/50"></div>
+                </div>
             </div>
 
-            {/* Action Buttons (A/B Style) */}
-            <div className="flex items-end justify-end gap-3 relative pr-2">
-                {/* B Button (Left) - Now ROTATE */}
-                <div className="flex flex-col items-center mb-2">
-                    <button 
-                        className="w-16 h-16 bg-green-700 rounded-full border-b-4 border-green-900 active:border-b-0 active:translate-y-1 shadow-xl text-sm text-white font-bold"
-                        onClick={() => onControl('ROT')}
-                        aria-label="Rotate"
-                    >B</button>
-                     <span className="text-[10px] text-slate-700 font-bold mt-1 tracking-tighter">ROT</span>
+            {/* A/B Buttons */}
+            <div className="flex gap-4 items-end transform -rotate-12 pb-4 touch-none">
+                 {/* Left Button (Low) -> Now A (Rotate, Red) */}
+                 <div className="flex flex-col items-center gap-1 mt-8">
+                     <button 
+                        className="w-14 h-14 rounded-full bg-red-600 border-b-4 border-red-800 active:border-b-0 active:translate-y-1 active:bg-red-700 shadow-lg text-red-100 font-bold text-xl flex items-center justify-center transition-all group touch-none outline-none focus:outline-none"
+                        onPointerDown={(e) => handlePress(e, 'ROT')}
+                        onContextMenu={(e) => e.preventDefault()}
+                     >
+                        <span className="group-active:opacity-50 pointer-events-none">A</span>
+                     </button>
+                     <span className="text-xs font-bold text-slate-700 tracking-wider pointer-events-none">ROT</span>
                 </div>
-                {/* A Button (Right) - Now DROP */}
-                <div className="flex flex-col items-center -mt-4">
-                    <button 
-                        className="w-16 h-16 bg-red-700 rounded-full border-b-4 border-red-900 active:border-b-0 active:translate-y-1 shadow-xl text-sm text-white font-bold"
-                        onClick={() => onControl('HD')}
-                        aria-label="Hard Drop"
-                    >A</button>
-                    <span className="text-[10px] text-slate-700 font-bold mt-1 tracking-tighter">DROP</span>
+                {/* Right Button (High) -> Now B (Drop, Green) */}
+                <div className="flex flex-col items-center gap-1">
+                     <button 
+                        className="w-14 h-14 rounded-full bg-green-600 border-b-4 border-green-800 active:border-b-0 active:translate-y-1 active:bg-green-700 shadow-lg text-green-100 font-bold text-xl flex items-center justify-center transition-all group touch-none outline-none focus:outline-none"
+                        onPointerDown={(e) => handlePress(e, 'HD')}
+                        onContextMenu={(e) => e.preventDefault()}
+                     >
+                        <span className="group-active:opacity-50 pointer-events-none">B</span>
+                     </button>
+                     <span className="text-xs font-bold text-slate-700 tracking-wider pointer-events-none">DROP</span>
                 </div>
             </div>
         </div>

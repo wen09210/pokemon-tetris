@@ -5,7 +5,7 @@ interface GameOverlayProps {
   gameStatus: GameStatus;
   score: number;
   collectedPokemon: number[];
-  onStartGame: () => void;
+  onStartGame: (e?: React.MouseEvent) => void;
 }
 
 const GameOverlay: React.FC<GameOverlayProps> = ({
@@ -56,6 +56,18 @@ const GameOverlay: React.FC<GameOverlayProps> = ({
                     onClick={onStartGame}
                 >
                     RETRY
+                </button>
+            </div>
+        ) : gameStatus === GameStatus.PAUSED ? (
+             <div className="flex flex-col items-center justify-center h-full w-full">
+                <div className="mb-6 animate-pulse">
+                    <h1 className="text-2xl text-white font-bold tracking-tighter drop-shadow-md">PAUSED</h1>
+                </div>
+                <button 
+                    className="bg-green-500 hover:bg-green-400 text-white text-sm py-4 px-8 rounded border-b-4 border-green-800 active:border-b-0 active:translate-y-1 transition-all font-bold tracking-widest"
+                    onClick={onStartGame}
+                >
+                    RESUME
                 </button>
             </div>
         ) : (
